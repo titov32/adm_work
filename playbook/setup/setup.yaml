@@ -1,0 +1,7 @@
+---
+- name: bla bla
+  hosts: "astra"
+  become: true
+  tasks:
+  - name: install mc
+    apt: name=sysstat update_cache=yes

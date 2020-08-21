@@ -1,0 +1,5 @@
+---
+- hosts:  tests
+- name: install sysstat
+apt: name=sysstat update_cache=yes
+sudo=yes

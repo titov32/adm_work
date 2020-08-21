@@ -1,0 +1,13 @@
+[
+        {
+                "name": "bla bla",
+                "hosts": " tests",
+                "become": true,
+                "tasks":[
+                  {
+                          "name": "install sysstat",
+                          "apt": "name=nginx update_cache=yes"
+                   }
+                 ]
+           }
+    ]
