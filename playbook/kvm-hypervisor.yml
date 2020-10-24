@@ -1,0 +1,74 @@
+- name: Configure kvm hypervisor
+  hosts: kvm
+  become: true
+  tasks:
+    - name: Install kvm
+      yum:
+        name: "{{ packages }}"
+      vars:
+        packages:
+          - qemu-kvm
+          - libvirt
+          - virt-install
+          - epel-release
+          - centos-release-openstack-train
+      register: repo
+
+    - name: debug variable
+      debug:
+        var: repo
+
+
+    - name: install openvswitch
+      yum:
+        name: "{{ packages }}"
+      vars:
+        packages:
+          - openvswitch
+      when: repo
+      register: openvswitch
+
+    - name: autostart openvswitch
+      systemd:
+        name: openvswitch
+        enabled: yes
+        state: started
+      when: openvswitch
+
+
+#    - name: Enabled libvirt
+#      systemd:
+#        name: libvirtd
+#        enables: yes
+#        state: started
+
+    - name: disbale NetworkManger
+      systemd:
+        name: NetworkManager
+        state: stopped
+        enabled: no
+
+#    - name: Enabled network.service
+#      systemd:
+#        name: network.service
+#        enabled: yes
+#        state: started
+
+#    - name: copy nginx config file
+#      copy: src=files/nginx.conf dest=/etc/nginx/sites-available/default
+      
+#    - name: enable configuration
+#      file: >
+#        dest=/etc/nginx/sites-enabled/default
+#        src=/etc/nginx/sites-available/default
+#        state=link
+    
+#    - name: copy index.html
+#      template: src=templates/index.html.j2 dest=/usr/share/nginx/html/index.html
+#        mode=0644
+        
+#    - name: restart nginx
+#      service: name=nginx state=restarted
+  handlers:
+    - name: install openvswitch
+      yum: name=openvswitch

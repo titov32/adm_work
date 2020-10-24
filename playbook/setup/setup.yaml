@@ -1,7 +1,10 @@
 ---
-- name: bla bla
-  hosts: "astra"
+- name: install mc
+  hosts: centos01
   become: true
   tasks:
   - name: install mc
-    apt: name=sysstat update_cache=yes
+    dnf: name=mc update_cache=yes
+  tasks:
+  - name: install pip3
+    dnf: name=python3-pip 

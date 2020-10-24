@@ -1,0 +1,17 @@
+- hosts: local
+  gather_facts: true
+  vars:
+    desired_interface_name: ""
+    target_interface_name: "192.168.122.10"
+
+  tasks:
+    - name: parse interfaces
+      set_fact:
+        desired_interface_name="{{ item }}"
+      when: hostvars[inventory_hostname]['ansible_{{item}}']['ipv4']['address'] == target_interface_name
+      with_items:
+        - "{{ ansible_interfaces }}"
+
+    - name: print result
+      debug:
+        var: desired_interface_name

@@ -6,10 +6,11 @@ set autoindent
 filetype on
 filetype plugin on
 
+
 set t_Co=256
 syntax on
 set nu
-
+hi Comment  guifg=#80a0ff ctermfg=darkred
 
 
 autocmd FileType python set omnifunc=pythoncomplete#Complete
